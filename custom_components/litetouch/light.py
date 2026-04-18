@@ -1,7 +1,7 @@
 """Support for LiteTouch lights."""
 import logging
 
-from homeassistant.components.light import ATTR_BRIGHTNESS, LightEntity, COLOR_MODE_BRIGHTNESS
+from homeassistant.components.light import ATTR_BRIGHTNESS, ColorMode, LightEntity
 from homeassistant.const import CONF_NAME
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
@@ -57,12 +57,12 @@ class LiteTouchLight(LiteTouchDevice, LightEntity):
     @property
     def color_mode(self):
         """Return the color mode of the light."""
-        return COLOR_MODE_BRIGHTNESS
+        return ColorMode.BRIGHTNESS
 
     @property
     def supported_color_modes(self):
         """Flag supported color modes."""
-        return {COLOR_MODE_BRIGHTNESS}
+        return {ColorMode.BRIGHTNESS}
 
     def turn_on(self, **kwargs):
         """Turn on the light."""
@@ -104,7 +104,7 @@ class LiteTouchLight(LiteTouchDevice, LightEntity):
         self._controller.set_loadlevel(self._loadid, int((level * 100) / 255))
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Supported attributes."""
         return {
             "LiteTouch_address": self._addr,
